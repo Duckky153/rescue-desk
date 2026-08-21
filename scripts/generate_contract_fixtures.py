@@ -13,7 +13,6 @@ import argparse
 import hashlib
 import io
 import json
-import re
 from pathlib import Path
 from typing import Any
 
@@ -24,6 +23,7 @@ from reportlab.lib.pdfencrypt import StandardEncryption
 from reportlab.pdfgen import canvas
 
 FIXTURE_VERSION = "1.0.0"
+FIXED_PDF_DATE = "(D:20000101000000+00'00')"
 
 
 def _pdf_bytes(
@@ -91,17 +91,17 @@ def _with_embedded_file(source: bytes) -> bytes:
             filename="synthetic-note.txt",
             desc="RescueDesk safety fixture",
         )
+        # MuPDF otherwise adds wall-clock values in an OS-specific PDF-date
+        # form. Set stream metadata before serialization so bytes and offsets
+        # stay deterministic across processes and platforms.
+        for xref in range(1, document.xref_length()):
+            if document.xref_get_key(xref, "Type") != ("name", "/EmbeddedFile"):
+                continue
+            document.xref_set_key(xref, "Params/CreationDate", FIXED_PDF_DATE)
+            document.xref_set_key(xref, "Params/ModDate", FIXED_PDF_DATE)
         output = io.BytesIO()
         document.save(output, garbage=4, deflate=True, no_new_id=True)
-        # MuPDF assigns wall-clock timestamps to the embedded-file object and
-        # does not expose timestamp parameters.  Replacing those fixed-width
-        # PDF date tokens keeps xref byte offsets valid and makes the fixture
-        # reproducible across processes and machines.
-        return re.sub(
-            rb"D:\d{14}[+-]\d{2}'\d{2}'",
-            rb"D:20000101000000+00'00'",
-            output.getvalue(),
-        )
+        return output.getvalue()
     finally:
         document.close()
 
