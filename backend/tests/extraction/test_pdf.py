@@ -183,6 +183,10 @@ def test_fixture_generator_is_reproducible(project_root: Path, tmp_path: Path) -
     assert {
         path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in first.glob("*.pdf")
     } == {path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in second.glob("*.pdf")}
+    with pymupdf.open(first / "safety_embedded.pdf") as embedded:
+        metadata = embedded.embfile_info("synthetic-note.txt")
+    assert metadata["creationDate"] == "D:20000101000000+00'00'"
+    assert metadata["modDate"] == "D:20000101000000+00'00'"
 
 
 def test_ground_truth_hashes_cover_every_pdf(
