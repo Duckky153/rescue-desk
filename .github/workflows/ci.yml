@@ -1,0 +1,123 @@
+name: RescueDesk CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine@sha256:18cfe3ef5e6815560c98237d6216d1e5119702fb0f3894c8785dd58b8bbe5d73
+        env:
+          POSTGRES_USER: rescuedesk
+          POSTGRES_PASSWORD: rescuedesk
+          POSTGRES_DB: rescuedesk
+        ports:
+          - 55432:5432
+        options: >-
+          --health-cmd "pg_isready -U rescuedesk -d rescuedesk"
+          --health-interval 2s
+          --health-timeout 3s
+          --health-retries 20
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      RESCUEDESK_DATABASE_URL: postgresql+psycopg://rescuedesk:rescuedesk@127.0.0.1:55432/rescuedesk
+      RESCUEDESK_UPLOAD_DIR: /tmp/rescuedesk-ci/uploads
+      RESCUEDESK_JWT_SECRET: ci-only-secret-not-for-deployment
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6
+        with:
+          python-version: "3.13"
+          enable-cache: true
+      - run: uv sync --all-groups --locked
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy src/rescue_desk
+      - run: uv run alembic upgrade head
+      - run: uv run alembic downgrade base
+      - run: uv run alembic upgrade head
+      - run: uv run alembic check
+      - run: uv run pytest --cov=rescue_desk --cov-report=term-missing --cov-fail-under=90
+      - run: uv run --with pip-audit pip-audit
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm audit --audit-level=high
+
+  containers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - run: docker compose build api web
+
+  full-stack-browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+      - run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: docker compose up --build --detach --wait
+      - run: test "$(docker compose exec -T api id -u)" = "10001"
+      - run: test "$(docker compose exec -T web id -u)" = "10001"
+      - run: npm run test:e2e
+        working-directory: frontend
+      - run: docker compose up --detach --force-recreate --no-deps --wait api
+      - run: npx playwright test --grep "one-decision readiness"
+        working-directory: frontend
+      - if: always()
+        run: docker compose logs --no-color api web
+      - if: always()
+        run: docker compose down --volumes

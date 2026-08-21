@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rescuedesk"
+version = "0.1.0"
+description = "Evidence-backed ERP contract exit control room"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "alembic>=1.15,<2",
+  "fastapi>=0.116,<1",
+  "httpx>=0.28,<1",
+  "jinja2>=3.1,<4",
+  "orjson>=3.10,<4",
+  "psycopg[binary]>=3.2,<4",
+  "pwdlib[argon2]>=0.3,<1",
+  "pyjwt>=2.10,<3",
+  "pydantic-settings>=2.8,<3",
+  "pymupdf>=1.25,<2",
+  "python-multipart>=0.0.20,<1",
+  "reportlab>=4.3,<5",
+  "sqlalchemy>=2.0,<3",
+  "uvicorn[standard]>=0.34,<1",
+]
+
+[project.scripts]
+rescuedesk-seed = "rescue_desk.seed_demo:main"
+rescuedesk-serve = "rescue_desk.bootstrap:main"
+
+[dependency-groups]
+dev = [
+  "mypy>=1.15,<2",
+  "pytest>=9.0.3,<10",
+  "pytest-cov>=6,<7",
+  "ruff>=0.11,<1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rescue_desk"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+packages = ["rescue_desk"]

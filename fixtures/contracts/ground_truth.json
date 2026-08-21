@@ -1,0 +1,324 @@
+{
+  "fixtures": {
+    "amendment_conflict.pdf": {
+      "case": "conflict_and_amendment",
+      "expected_assertions": [
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "type": "date",
+            "value": "2026-03-01"
+          },
+          "page_number": 1,
+          "semantic_key": "contract.effective_date"
+        },
+        {
+          "conflicting": true,
+          "normalized_value": {
+            "amount_minor": 12000000,
+            "cadence": "annual",
+            "currency": "USD",
+            "type": "money"
+          },
+          "page_number": 1,
+          "semantic_key": "fee.subscription"
+        },
+        {
+          "conflicting": true,
+          "normalized_value": {
+            "days": 90,
+            "type": "duration_days"
+          },
+          "page_number": 1,
+          "semantic_key": "renewal.notice_days"
+        },
+        {
+          "conflicting": true,
+          "normalized_value": {
+            "amount_minor": 14400000,
+            "cadence": "annual",
+            "currency": "USD",
+            "type": "money"
+          },
+          "page_number": 2,
+          "semantic_key": "fee.subscription"
+        },
+        {
+          "conflicting": true,
+          "normalized_value": {
+            "days": 120,
+            "type": "duration_days"
+          },
+          "page_number": 2,
+          "semantic_key": "renewal.notice_days"
+        }
+      ],
+      "expected_conflicts": [
+        "fee.subscription",
+        "renewal.notice_days"
+      ],
+      "expected_findings": [
+        "amendment_detected",
+        "conflicting_assertions",
+        "conflicting_assertions"
+      ],
+      "sha256": "740fb1d1b98b7c9ec4c959787d31c61d340c1e308f5f0b71bde3bbdaea121846",
+      "size_bytes": 3019
+    },
+    "clean_standard.pdf": {
+      "case": "clean",
+      "expected_assertions": [
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "type": "date",
+            "value": "2026-01-15"
+          },
+          "page_number": 1,
+          "semantic_key": "contract.effective_date"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "type": "date",
+            "value": "2029-01-14"
+          },
+          "page_number": 1,
+          "semantic_key": "contract.initial_term_end_date"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "amount_minor": 12000000,
+            "cadence": "annual",
+            "currency": "USD",
+            "type": "money"
+          },
+          "page_number": 1,
+          "semantic_key": "fee.subscription"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "amount_minor": 2500000,
+            "cadence": "one_time",
+            "currency": "USD",
+            "type": "money"
+          },
+          "page_number": 1,
+          "semantic_key": "fee.termination"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "type": "boolean",
+            "value": true
+          },
+          "page_number": 1,
+          "semantic_key": "renewal.auto_renews"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "days": 90,
+            "type": "duration_days"
+          },
+          "page_number": 1,
+          "semantic_key": "renewal.notice_days"
+        }
+      ],
+      "expected_conflicts": [],
+      "expected_findings": [],
+      "sha256": "391db07d6d261f6eb02cb42b89c01977f117277a93b064abd647372fb8d3038c",
+      "size_bytes": 2519
+    },
+    "fee_and_date_variants.pdf": {
+      "case": "fee_and_date_formats",
+      "expected_assertions": [
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "type": "date",
+            "value": "2026-09-15"
+          },
+          "page_number": 1,
+          "semantic_key": "contract.effective_date"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "type": "date",
+            "value": "2028-09-14"
+          },
+          "page_number": 1,
+          "semantic_key": "contract.expiration_date"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "amount_minor": 1050050,
+            "cadence": "monthly",
+            "currency": "USD",
+            "type": "money"
+          },
+          "page_number": 1,
+          "semantic_key": "fee.subscription"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "amount_minor": 500000,
+            "cadence": "one_time",
+            "currency": "EUR",
+            "type": "money"
+          },
+          "page_number": 1,
+          "semantic_key": "fee.implementation"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "amount_minor": 275025,
+            "cadence": "one_time",
+            "currency": "GBP",
+            "type": "money"
+          },
+          "page_number": 1,
+          "semantic_key": "fee.termination"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "type": "boolean",
+            "value": false
+          },
+          "page_number": 1,
+          "semantic_key": "renewal.auto_renews"
+        }
+      ],
+      "expected_conflicts": [],
+      "expected_findings": [],
+      "sha256": "f12293a0362abe6e7995763f096e2c39f926b8f8d081d05f271743c3af1df5d6",
+      "size_bytes": 2311
+    },
+    "prompt_injection.pdf": {
+      "case": "prompt_injection",
+      "expected_assertions": [
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "type": "date",
+            "value": "2026-08-01"
+          },
+          "page_number": 1,
+          "semantic_key": "contract.effective_date"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "amount_minor": 9600000,
+            "cadence": "annual",
+            "currency": "USD",
+            "type": "money"
+          },
+          "page_number": 1,
+          "semantic_key": "fee.subscription"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "type": "boolean",
+            "value": true
+          },
+          "page_number": 1,
+          "semantic_key": "renewal.auto_renews"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "days": 60,
+            "type": "duration_days"
+          },
+          "page_number": 1,
+          "semantic_key": "renewal.notice_days"
+        }
+      ],
+      "expected_conflicts": [],
+      "expected_findings": [
+        "prompt_injection_text",
+        "prompt_injection_text"
+      ],
+      "forbidden_values": [
+        {
+          "amount_minor": 100,
+          "semantic_key": "fee.subscription"
+        }
+      ],
+      "sha256": "cc706b96892a0549cb0a53b796d9ef8043969429e625f7bc4174d7db9611046e",
+      "size_bytes": 2392
+    },
+    "redacted_terms.pdf": {
+      "case": "redaction",
+      "expected_assertions": [
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "type": "date",
+            "value": "2028-07-31"
+          },
+          "page_number": 1,
+          "semantic_key": "contract.initial_term_end_date"
+        },
+        {
+          "conflicting": false,
+          "normalized_value": {
+            "days": 45,
+            "type": "duration_days"
+          },
+          "page_number": 1,
+          "semantic_key": "renewal.notice_days"
+        }
+      ],
+      "expected_conflicts": [],
+      "expected_findings": [
+        "redacted_value",
+        "redacted_value"
+      ],
+      "sha256": "7b34ef5a79d66404408042f6cf63f0d3c5d57d1a93800b997e5dba9165d8e89c",
+      "size_bytes": 2067
+    },
+    "safety_embedded.pdf": {
+      "case": "embedded_file_rejection",
+      "expected_safety_error": "embedded_files",
+      "sha256": "5ea813904ae6f1574c8e145d58adb2f5e4f9b7c8b3b105586708141afcd34552",
+      "size_bytes": 1945
+    },
+    "safety_encrypted.pdf": {
+      "case": "encrypted_rejection",
+      "expected_safety_error": "encrypted_pdf",
+      "sha256": "289df90702af14f6ef3543630ca1787f8c5e8c17c8c48c91bc5d14a014b215bc",
+      "size_bytes": 2399
+    },
+    "safety_invalid_header.pdf": {
+      "case": "invalid_header_rejection",
+      "expected_safety_error": "invalid_header",
+      "sha256": "614dacadbce5d3c2f4ff61cac594f9a647b1b70c31a706f2151fc132f8486858",
+      "size_bytes": 34
+    },
+    "scan_needs_ocr.pdf": {
+      "case": "needs_ocr",
+      "expected_assertions": [],
+      "expected_conflicts": [],
+      "expected_findings": [
+        "page_needs_ocr"
+      ],
+      "needs_ocr_pages": [
+        1
+      ],
+      "sha256": "93e607f002cd5518e4d02cadf8086e264988d4f93b4452de51aae5dcce16ddc8",
+      "size_bytes": 1813
+    }
+  },
+  "notice": "All contracts, companies, and values are synthetic.",
+  "schema_version": "1.0.0"
+}
