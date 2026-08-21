@@ -1,0 +1,1 @@
+"""RescueDesk backend package."""

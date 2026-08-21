@@ -1,0 +1,16 @@
+.next
+node_modules
+playwright-report
+test-results
+reports
+npm-debug.log
+.env*
+!.env.example
+tests
+**/*.test.ts
+**/*.test.tsx
+coverage
+*.tsbuildinfo
+vitest.config.ts
+vitest.setup.ts
+playwright.config.ts

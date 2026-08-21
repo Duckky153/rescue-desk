@@ -1,0 +1,1 @@
+"""Deterministic RescueDesk domain logic."""

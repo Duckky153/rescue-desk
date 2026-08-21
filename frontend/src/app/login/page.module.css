@@ -1,0 +1,139 @@
+.page {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: minmax(420px, 1.1fr) minmax(380px, 0.9fr);
+}
+
+.story {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  padding: 34px 48px;
+  background: linear-gradient(145deg, var(--teal-950), #155462 68%, #b9dadd 160%);
+  color: white;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand span {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 28%);
+  border-radius: 9px;
+  background: rgb(255 255 255 / 10%);
+  font-weight: 850;
+}
+
+.storyCopy {
+  max-width: 620px;
+  margin: auto 0;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  color: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.storyCopy h1 {
+  max-width: 580px;
+  margin-bottom: 22px;
+  font-size: clamp(38px, 5vw, 64px);
+  font-weight: 540;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+
+.storyCopy > p:not(.eyebrow) {
+  max-width: 560px;
+  color: rgb(255 255 255 / 74%);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.storyCopy ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.storyCopy li {
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 999px;
+  padding: 7px 11px;
+  background: rgb(255 255 255 / 7%);
+  color: rgb(255 255 255 / 82%);
+  font-size: 11px;
+}
+
+.legal {
+  max-width: 530px;
+  margin: 0;
+  color: rgb(255 255 255 / 50%);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.formSide {
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background: var(--canvas);
+}
+
+.form {
+  display: grid;
+  width: min(100%, 390px);
+  gap: 20px;
+}
+
+.form h2 {
+  margin-bottom: 8px;
+  color: var(--teal-950);
+  font-size: 28px;
+  letter-spacing: -0.025em;
+}
+
+.form .eyebrow {
+  color: var(--teal-700);
+}
+
+.form .button {
+  min-height: 44px;
+}
+
+@media (max-width: 800px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+
+  .story {
+    min-height: auto;
+    padding: 24px;
+  }
+
+  .storyCopy {
+    margin: 58px 0;
+  }
+
+  .storyCopy h1 {
+    font-size: 38px;
+  }
+
+  .formSide {
+    min-height: 520px;
+    padding: 36px 22px;
+  }
+}

@@ -1,0 +1,20 @@
+title = "rescue-desk"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Generated dependency, cache, coverage, and browser artifacts"
+paths = [
+  '''^backend/\.coverage$''',
+  '''^backend/\.mypy_cache/''',
+  '''^backend/\.pytest_cache/''',
+  '''^backend/\.ruff_cache/''',
+  '''^backend/\.venv/''',
+  '''^backend/htmlcov/''',
+  '''^frontend/\.next/''',
+  '''^frontend/coverage/''',
+  '''^frontend/node_modules/''',
+  '''^frontend/playwright-report/''',
+  '''^frontend/test-results/''',
+]
