@@ -89,6 +89,10 @@
   grid-template-columns: repeat(5, minmax(104px, 1fr));
 }
 
+.workflowHint {
+  display: none;
+}
+
 .workflowTrack > div {
   position: relative;
   display: flex;
@@ -711,6 +715,21 @@
   color: #526467;
   font-size: 8px;
   line-height: 1.45;
+}
+
+.demoCheckpoint > button {
+  justify-self: start;
+  margin-top: 4px;
+}
+
+.reviewDecisionTarget {
+  scroll-margin-top: 16px;
+  border-radius: 8px;
+}
+
+.reviewDecisionTarget:focus-visible {
+  outline: 3px solid rgb(32 101 112 / 22%);
+  outline-offset: 4px;
 }
 
 .assertionList {
@@ -1907,6 +1926,14 @@
     padding-bottom: 5px;
     overflow-x: auto;
     grid-template-columns: repeat(5, 130px);
+  }
+
+  .workflowHint {
+    display: block;
+    margin-top: 5px;
+    color: var(--ink-muted);
+    font-size: 9px;
+    text-align: right;
   }
 
   .caseMetrics {

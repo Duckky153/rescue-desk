@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import cast
 
 import pytest
-from fastapi.testclient import TestClient
 from httpx import Response
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
+from starlette.testclient import TestClient
 
 from rescue_desk.config import get_settings
 from rescue_desk.domain.hashing import hash_payload

@@ -176,7 +176,10 @@ test("guided tour teaches the workflow and navigates every section with keyboard
   await expect(page.getByText("Problem", { exact: true })).toBeVisible();
   await expect(page.getByText("User", { exact: true })).toBeVisible();
   await expect(page.getByText("Outcome", { exact: true })).toBeVisible();
-  await page.getByRole("button", { name: "Start guided demo" }).click();
+  await page.getByRole("button", { name: "Review final decision" }).click();
+  await expect(page.locator("#evidence-decision-controls")).toBeFocused();
+  await expect(page.getByRole("button", { name: "Record accept" })).toBeVisible();
+  await page.getByRole("button", { name: "Start full tour" }).click();
 
   let guide = page.getByRole("region", { name: /contract exit should not depend/i });
   await expect(guide).toBeFocused();
@@ -203,7 +206,7 @@ test("guided tour teaches the workflow and navigates every section with keyboard
   await expect(restart).toHaveCSS("color", "rgb(255, 255, 255)");
 
   await guide.press("Escape");
-  await expect(page.getByRole("button", { name: "Start guided demo" })).toBeFocused();
+  await expect(page.getByRole("button", { name: "Start full tour" })).toBeFocused();
   await expectSingleMainWithoutPageOverflow(page);
   await expectNoSeriousAccessibilityViolations(page);
   expect(blockedWrites).toEqual([]);

@@ -2,8 +2,8 @@ import hashlib
 from datetime import date
 from typing import cast
 
-from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
+from starlette.testclient import TestClient
 
 from rescue_desk.config import get_settings
 from rescue_desk.models import (

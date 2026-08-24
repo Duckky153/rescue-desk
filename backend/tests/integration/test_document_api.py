@@ -8,10 +8,10 @@ from pathlib import Path
 from typing import cast
 
 import pytest
-from fastapi.testclient import TestClient
 from httpx import Response
 from reportlab.pdfgen import canvas
 from sqlalchemy.orm import Session
+from starlette.testclient import TestClient
 
 from rescue_desk.config import get_settings
 from rescue_desk.extraction import ClauseExtractionResult, ExtractedAssertion

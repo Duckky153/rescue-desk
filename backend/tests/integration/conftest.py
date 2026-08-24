@@ -3,10 +3,10 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import pytest
-from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
+from starlette.testclient import TestClient
 
 from rescue_desk.auth import create_access_token, hash_password
 from rescue_desk.config import get_settings

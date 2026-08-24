@@ -27,6 +27,7 @@ export function Workbench({ caseId }: { caseId: string }) {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [snapshotIsStale, setSnapshotIsStale] = useState(false);
+  const [decisionJumpRequest, setDecisionJumpRequest] = useState(0);
   const refreshGeneration = useRef(0);
 
   const refresh = useCallback(async (context: "manual" | "mutation" | "recovery" = "manual") => {
@@ -176,6 +177,7 @@ export function Workbench({ caseId }: { caseId: string }) {
             </div>
           ))}
         </div>
+        <span className={styles.workflowHint}>Swipe to see every workflow stage</span>
         <div className={styles.caseMetrics}>
           <article>
             <span>Source package</span>
@@ -220,6 +222,10 @@ export function Workbench({ caseId }: { caseId: string }) {
         }
         activeTab={activeTab}
         onSelectTab={setActiveTab}
+        onReviewDecision={() => {
+          setActiveTab("evidence");
+          setDecisionJumpRequest((request) => request + 1);
+        }}
       />
 
       {error ? (
@@ -274,6 +280,7 @@ export function Workbench({ caseId }: { caseId: string }) {
             mutationsBlocked={snapshotIsStale}
             onRefresh={refreshAfterMutation}
             onRecoveryRefresh={refreshAfterRecovery}
+            decisionJumpRequest={decisionJumpRequest}
           />
         ) : null}
         {activeTab === "economics" ? (

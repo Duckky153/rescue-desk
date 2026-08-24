@@ -83,7 +83,11 @@
   line-height: 1.45;
 }
 
-.storyCard > button {
+.storyActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 180px;
   white-space: nowrap;
 }
 
@@ -284,7 +288,8 @@
     grid-template-columns: 1fr;
   }
 
-  .storyCard > button {
+  .storyActions,
+  .storyActions > button {
     width: 100%;
   }
 

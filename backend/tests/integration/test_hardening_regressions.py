@@ -10,10 +10,10 @@ from typing import Any, cast
 
 import pytest
 from fastapi import HTTPException
-from fastapi.testclient import TestClient
 from httpx import Response
 from sqlalchemy import create_engine, event, select
 from sqlalchemy.orm import Session, sessionmaker
+from starlette.testclient import TestClient
 
 import rescue_desk.services.documents as documents_service
 from rescue_desk.config import get_settings

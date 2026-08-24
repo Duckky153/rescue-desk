@@ -171,12 +171,17 @@ def _seed_reviewed_fee(
     )
 
 
-def _legacy_database(path: Path, monkeypatch: pytest.MonkeyPatch) -> tuple[Config, sa.Engine]:
+def _legacy_database(
+    path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    request: pytest.FixtureRequest,
+) -> tuple[Config, sa.Engine]:
     monkeypatch.setenv("RESCUEDESK_DATABASE_URL", f"sqlite:///{path}")
     get_settings.cache_clear()
     config = _config(path)
     command.upgrade(config, BASE_REVISION)
     engine = sa.create_engine(f"sqlite:///{path}")
+    request.addfinalizer(engine.dispose)
     return config, engine
 
 
@@ -198,9 +203,9 @@ def _seed_legacy_export(connection: sa.Connection) -> None:
 
 
 def test_populated_legacy_reviewed_fee_roundtrips_to_strict_head(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, request: pytest.FixtureRequest
 ) -> None:
-    config, engine = _legacy_database(tmp_path / "valid-legacy.db", monkeypatch)
+    config, engine = _legacy_database(tmp_path / "valid-legacy.db", monkeypatch, request)
     with engine.begin() as connection:
         _seed_core(connection)
         _seed_reviewed_fee(connection)
@@ -275,12 +280,14 @@ def test_populated_legacy_reviewed_fee_roundtrips_to_strict_head(
 def test_migration_rejects_reviewed_fee_without_active_same_revision_evidence(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
+    request: pytest.FixtureRequest,
     document_revision_id: str,
     document_superseded: bool,
 ) -> None:
     config, engine = _legacy_database(
         tmp_path / f"invalid-evidence-{document_revision_id}-{document_superseded}.db",
         monkeypatch,
+        request,
     )
     with engine.begin() as connection:
         _seed_core(connection)
@@ -295,9 +302,9 @@ def test_migration_rejects_reviewed_fee_without_active_same_revision_evidence(
 
 
 def test_migration_rejects_reviewed_fee_without_exact_cadence(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, request: pytest.FixtureRequest
 ) -> None:
-    config, engine = _legacy_database(tmp_path / "missing-cadence.db", monkeypatch)
+    config, engine = _legacy_database(tmp_path / "missing-cadence.db", monkeypatch, request)
     with engine.begin() as connection:
         _seed_core(connection)
         _seed_reviewed_fee(connection, billing_cadence=None)
@@ -307,9 +314,9 @@ def test_migration_rejects_reviewed_fee_without_exact_cadence(
 
 
 def test_migration_rejects_noncanonical_legacy_money_json(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, request: pytest.FixtureRequest
 ) -> None:
-    config, engine = _legacy_database(tmp_path / "noncanonical-money.db", monkeypatch)
+    config, engine = _legacy_database(tmp_path / "noncanonical-money.db", monkeypatch, request)
     with engine.begin() as connection:
         _seed_core(connection)
         _seed_reviewed_fee(connection)
@@ -335,9 +342,9 @@ def test_migration_rejects_noncanonical_legacy_money_json(
 
 
 def test_migration_rejects_legacy_active_aggregate_overflow(
-    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, request: pytest.FixtureRequest
 ) -> None:
-    config, engine = _legacy_database(tmp_path / "aggregate-overflow.db", monkeypatch)
+    config, engine = _legacy_database(tmp_path / "aggregate-overflow.db", monkeypatch, request)
     with engine.begin() as connection:
         _seed_core(connection)
         timestamp = "2026-08-21 12:00:00"

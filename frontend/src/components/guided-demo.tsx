@@ -41,12 +41,14 @@ export function GuidedDemo({
   isSeededCompletedExample = false,
   activeTab,
   onSelectTab,
+  onReviewDecision,
 }: {
   status: CaseStatus;
   blockerCount: number;
   isSeededCompletedExample?: boolean;
   activeTab: WorkbenchTab;
   onSelectTab: (tab: WorkbenchTab) => void;
+  onReviewDecision: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const [stepIndex, setStepIndex] = useState(0);
@@ -194,10 +196,15 @@ export function GuidedDemo({
             <dd>A cited, reproducible, approver-controlled contract-exit packet.</dd>
           </div>
         </dl>
-        <button ref={startRef} type="button" className="button" onClick={start}>
-          Start guided demo
-          <span aria-hidden="true">→</span>
-        </button>
+        <div className={styles.storyActions}>
+          <button type="button" className="button" onClick={onReviewDecision}>
+            Review final decision
+            <span aria-hidden="true">→</span>
+          </button>
+          <button ref={startRef} type="button" className="button secondary" onClick={start}>
+            Start full tour
+          </button>
+        </div>
       </section>
     );
   }

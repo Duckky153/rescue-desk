@@ -5,11 +5,11 @@ from datetime import date
 from pathlib import Path
 from typing import Any, cast
 
-import fitz
+import pymupdf as fitz
 import pytest
-from fastapi.testclient import TestClient
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+from starlette.testclient import TestClient
 
 from rescue_desk.models import (
     AuditEvent,

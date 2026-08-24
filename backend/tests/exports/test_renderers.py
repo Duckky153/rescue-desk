@@ -5,7 +5,7 @@ import json
 from dataclasses import replace
 from datetime import timedelta, timezone
 
-import fitz
+import pymupdf as fitz
 import pytest
 
 from rescue_desk.demo import DEMO_COMPLETED_CASE_NAME
