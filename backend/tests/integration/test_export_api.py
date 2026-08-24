@@ -8,10 +8,10 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any, cast
 
-import fitz
+import pymupdf as fitz
 import pytest
-from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
+from starlette.testclient import TestClient
 
 import rescue_desk.services.exports as export_service
 from rescue_desk.config import get_settings

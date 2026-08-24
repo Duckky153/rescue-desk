@@ -41,6 +41,7 @@ interface WorkbenchEvidenceProps {
   mutationsBlocked?: boolean;
   onRefresh: () => Promise<void>;
   onRecoveryRefresh?: () => Promise<void>;
+  decisionJumpRequest?: number;
 }
 
 export function filterAssertions(
@@ -394,9 +395,11 @@ export function WorkbenchEvidence({
   mutationsBlocked = false,
   onRefresh,
   onRecoveryRefresh = onRefresh,
+  decisionJumpRequest = 0,
 }: WorkbenchEvidenceProps) {
   const { user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const decisionSectionRef = useRef<HTMLDivElement>(null);
   const [requestedDocumentId, setRequestedDocumentId] = useState<string | null>(documents[0]?.id ?? null);
   const [requestedAssertionId, setRequestedAssertionId] = useState<string | null>(
     assertions.find(
@@ -483,6 +486,14 @@ export function WorkbenchEvidence({
   const pendingCount = assertions.filter(
     (item) => item.is_current && ["proposed", "conflicting"].includes(item.review_state),
   ).length;
+
+  useEffect(() => {
+    if (decisionJumpRequest <= 0 || !selectedAssertion) return;
+    const target = decisionSectionRef.current;
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => target.focus({ preventScroll: true }), 350);
+  }, [decisionJumpRequest, selectedAssertion]);
 
   function selectCitation(assertion: WorkbenchAssertion, evidenceIndex = 0) {
     setRequestedAssertionId(assertion.id);
@@ -816,6 +827,19 @@ export function WorkbenchEvidence({
               Compare the selected proposal with its exact quote, then record Accept, Correct, or
               Reject. That single decision unlocks the readiness checkpoint.
             </span>
+            <button
+              type="button"
+              className="button small"
+              onClick={() => {
+                decisionSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+                window.setTimeout(
+                  () => decisionSectionRef.current?.focus({ preventScroll: true }),
+                  350,
+                );
+              }}
+            >
+              Open decision controls
+            </button>
           </div>
         ) : pendingCount === 0 ? (
           <div className={styles.demoCheckpoint} data-complete="true" role="status">
@@ -955,20 +979,27 @@ export function WorkbenchEvidence({
               <summary>Inspect normalized value</summary>
               <pre>{JSON.stringify(selectedAssertion.normalized_value, null, 2)}</pre>
             </details>
-            <AssertionReviewForm
-              key={`${selectedAssertion.id}:${selectedAssertion.version}`}
-              assertion={selectedAssertion}
-              documents={documents}
-              canReview={canReview}
-              unavailableMessage={
-                caseStatus === "archived"
-                  ? "Archived cases are permanently read-only and have no further transitions."
-                  : evidenceMutable
-                  ? "Your role can inspect evidence but cannot record review decisions."
-                  : "This revision is locked at the current workflow state. Reopen evidence review before recording a new decision."
-              }
-              onReviewed={onRefresh}
-            />
+            <div
+              ref={decisionSectionRef}
+              className={styles.reviewDecisionTarget}
+              id="evidence-decision-controls"
+              tabIndex={-1}
+            >
+              <AssertionReviewForm
+                key={`${selectedAssertion.id}:${selectedAssertion.version}`}
+                assertion={selectedAssertion}
+                documents={documents}
+                canReview={canReview}
+                unavailableMessage={
+                  caseStatus === "archived"
+                    ? "Archived cases are permanently read-only and have no further transitions."
+                    : evidenceMutable
+                    ? "Your role can inspect evidence but cannot record review decisions."
+                    : "This revision is locked at the current workflow state. Reopen evidence review before recording a new decision."
+                }
+                onReviewed={onRefresh}
+              />
+            </div>
           </div>
         ) : null}
       </aside>

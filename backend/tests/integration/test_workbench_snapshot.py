@@ -1,7 +1,7 @@
 from typing import Any, cast
 
-from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
+from starlette.testclient import TestClient
 
 from rescue_desk.models import AuditEvent, ExportArtifact, Role
 from tests.integration.conftest import seed_identity

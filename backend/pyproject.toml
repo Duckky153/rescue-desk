@@ -30,6 +30,7 @@ rescuedesk-serve = "rescue_desk.bootstrap:main"
 
 [dependency-groups]
 dev = [
+  "httpx2>=2.12,<3",
   "mypy>=1.15,<2",
   "pytest>=9.0.3,<10",
   "pytest-cov>=6,<7",
@@ -42,6 +43,11 @@ packages = ["src/rescue_desk"]
 [tool.pytest.ini_options]
 addopts = "-ra --strict-config --strict-markers"
 testpaths = ["tests"]
+filterwarnings = [
+  "ignore:builtin type SwigPyPacked has no __module__ attribute:DeprecationWarning",
+  "ignore:builtin type SwigPyObject has no __module__ attribute:DeprecationWarning",
+  "ignore:builtin type swigvarlink has no __module__ attribute:DeprecationWarning",
+]
 
 [tool.ruff]
 line-length = 100

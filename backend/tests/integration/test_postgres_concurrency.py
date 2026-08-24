@@ -14,11 +14,11 @@ from typing import Any
 
 import pytest
 from fastapi import HTTPException
-from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, select, text
 from sqlalchemy.engine import Engine, make_url
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session, sessionmaker
+from starlette.testclient import TestClient
 
 import rescue_desk.services.documents as documents_service
 import rescue_desk.services.exports as export_service

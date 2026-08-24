@@ -7,12 +7,14 @@ describe("GuidedDemo", () => {
 
   it("explains the product, supports keyboard progression, direct section jumps, and dismissal", () => {
     const onSelectTab = vi.fn();
+    const onReviewDecision = vi.fn();
     render(
       <GuidedDemo
         status="evidence_review"
         blockerCount={1}
         activeTab="evidence"
         onSelectTab={onSelectTab}
+        onReviewDecision={onReviewDecision}
       />,
     );
 
@@ -21,7 +23,10 @@ describe("GuidedDemo", () => {
     expect(screen.getByText("Outcome")).toBeVisible();
     expect(screen.getByText(/one source decision before internal readiness/i)).toBeVisible();
 
-    const start = screen.getByRole("button", { name: /start guided demo/i });
+    fireEvent.click(screen.getByRole("button", { name: /review final decision/i }));
+    expect(onReviewDecision).toHaveBeenCalledOnce();
+
+    const start = screen.getByRole("button", { name: /start full tour/i });
     fireEvent.click(start);
     const guide = screen.getByRole("region", { name: /contract exit should not depend/i });
     expect(guide).toHaveFocus();
@@ -42,7 +47,7 @@ describe("GuidedDemo", () => {
       key: "Escape",
     });
     expect(screen.queryByText("Three-minute product tour")).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /start guided demo/i })).toHaveFocus();
+    expect(screen.getByRole("button", { name: /start full tour/i })).toHaveFocus();
   });
 
   it("describes an exported case as the inspectable completed outcome", () => {
@@ -53,10 +58,11 @@ describe("GuidedDemo", () => {
         isSeededCompletedExample
         activeTab="readiness"
         onSelectTab={vi.fn()}
+        onReviewDecision={vi.fn()}
       />,
     );
     expect(screen.getByText(/role-separated approver history and four exports/i)).toBeVisible();
-    fireEvent.click(screen.getByRole("button", { name: /start guided demo/i }));
+    fireEvent.click(screen.getByRole("button", { name: /start full tour/i }));
     for (let index = 0; index < 5; index += 1) {
       fireEvent.click(screen.getByRole("button", { name: "Next" }));
     }
