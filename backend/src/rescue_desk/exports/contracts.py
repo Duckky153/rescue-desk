@@ -12,11 +12,7 @@ from enum import StrEnum
 from rescue_desk.domain.money import MAX_MINOR_UNITS, SUPPORTED_CURRENCIES
 
 EXPORT_SCHEMA_VERSION = "rescuedesk.export.v2"
-DISCLAIMER = (
-    "Demonstration only. This is not legal, accounting, or financial advice. "
-    "RescueDesk is an independent portfolio project and is not affiliated with, "
-    "endorsed by, or sponsored by Entry Inc. or DualEntry."
-)
+DISCLAIMER = "Demonstration only. This is not legal, accounting, or financial advice."
 
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
 

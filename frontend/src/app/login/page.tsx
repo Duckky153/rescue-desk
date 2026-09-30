@@ -52,8 +52,7 @@ export default function LoginPage() {
           </ul>
         </div>
         <p className={styles.legal}>
-          Independent demonstration. Not affiliated with Entry Inc. Not legal, accounting, or
-          financial advice.
+          Demonstration with sample data only. Not legal, accounting, or financial advice.
         </p>
       </section>
       <section className={styles.formSide} aria-label="Sign in">

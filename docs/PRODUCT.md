@@ -54,7 +54,6 @@ hide.
 - Currency conversion
 - Electronic signatures, email sending, CRM mutation, or contract cancellation
 - A replacement for an ERP or document-management platform
-- A reproduction of DualEntry's private policies or software
 
 ## Product invariants
 
@@ -84,12 +83,12 @@ hide.
 
 Completion must be demonstrated rather than inferred. The full project is complete only when:
 
-- The documented workflow works through the real API and selected UI.
+- The documented workflow works through the real API and UI.
 - Synthetic and public fixtures exercise clean, missing, conflicting, amended, scanned, and
   spreadsheet-injection cases.
 - Source spans and hashes are verified, not merely displayed.
 - Calculation fixtures have independent expected results and boundary tests.
 - Unauthorized approval and cross-organization access are rejected.
 - Exported PDFs parse, CSVs remain formula-safe, and JSON hashes reproduce.
-- Desktop and mobile browser checks pass after a visual direction is approved and implemented.
+- Desktop and mobile browser checks pass.
 - Documentation matches the actual commands and runtime behavior.

@@ -118,10 +118,10 @@ synthetic data:
 6. Reopen evidence review to create a new revision, freeze the prior approved revision, retire its
    artifacts from the current view, and preserve explicit-assumption lineage.
 
-For destructive or edge-case lifecycle proof, use a newly created synthetic matter. The browser test
-suite does this so the two recruiter-facing seed cases remain deterministic.
+For destructive or edge-case lifecycle checks, use a newly created synthetic matter. The browser
+test suite does this so the two seeded demo cases stay unchanged.
 
-## Permitted claims
+## What the demo shows
 
 - The local synthetic fixture completes the implemented intake, evidence, calculation, review,
   approval, revision, audit, and export workflow.
@@ -129,8 +129,7 @@ suite does this so the two recruiter-facing seed cases remain deterministic.
   readiness.
 - The completed case contains four formats generated from seeded synthetic approver-role history,
   sharing one verified packet hash.
-- The exact executed test commands and counts may be reported.
 - The named deterministic scenario reproduces its checked-in expected result.
 
-Do not claim customers, revenue, adoption, legal accuracy, eligibility, promised savings, production
-deployment, or affiliation with DualEntry or Entry Inc.
+It does not show customers, revenue, adoption, legal accuracy, eligibility, promised savings, or a
+production deployment.

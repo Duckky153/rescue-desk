@@ -28,16 +28,13 @@ file safety -> immutable document/pages -> extraction proposal
 
 ## Technology boundary
 
-| Area | Company-confirmed public signal | RescueDesk choice |
-|---|---|---|
-| Frontend | React, Next.js, JavaScript/TypeScript, responsiveness, accessibility | Implemented Next.js + React + strict TypeScript Evidence Workbench |
-| Backend | Python, robust APIs, accounting edge cases, testing and monitoring | Python 3.13 + FastAPI |
-| Data | PostgreSQL, SQL, schema design and migrations | PostgreSQL + SQLAlchemy + Alembic |
-| Infrastructure | AWS appears in a public engineering posting | AWS-compatible container design; no external deployment yet |
-| AI | AI-native product and AI-tooling emphasis | Optional local structured extraction adapter; never arithmetic or approval |
-
-FastAPI, SQLAlchemy, Alembic, the data model, formulas, visual system, and all product behavior are
-portfolio implementation choices. They are not claims about DualEntry's exact production stack.
+| Area | RescueDesk choice |
+|---|---|
+| Frontend | Next.js + React + strict TypeScript Evidence Workbench |
+| Backend | Python 3.13 + FastAPI |
+| Data | PostgreSQL + SQLAlchemy + Alembic |
+| Infrastructure | Docker Compose stack (PostgreSQL, API, web) bound to loopback; no external deployment |
+| AI | Optional local structured extraction adapter, off by default; never arithmetic or approval |
 
 ## Module responsibilities
 

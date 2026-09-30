@@ -26,7 +26,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
         <div className={styles.disclaimer}>
           <strong>Demonstration only</strong>
-          <span>Not legal or financial advice. Not affiliated with Entry Inc.</span>
+          <span>Sample data only. Not legal or financial advice.</span>
         </div>
         <div className={styles.account}>
           <span className={styles.avatar}>{user?.display_name.slice(0, 1).toUpperCase()}</span>

@@ -84,7 +84,7 @@ app = FastAPI(
     version="0.1.0",
     description=(
         "Evidence-backed ERP contract exit review. Demonstration only; not legal, "
-        "accounting, or financial advice; not affiliated with Entry Inc."
+        "accounting, or financial advice."
     ),
     lifespan=lifespan,
 )

@@ -2,9 +2,9 @@
 
 ## Current boundary
 
-RescueDesk is a loopback-only portfolio demonstration. No public deployment is authorized or
-claimed. The checked-in Compose stack contains synthetic data only and exposes PostgreSQL, the API,
-and the web UI only on `127.0.0.1`.
+RescueDesk is a loopback-only local demonstration with no public deployment. The checked-in Compose
+stack contains synthetic data only and exposes PostgreSQL, the API, and the web UI only on
+`127.0.0.1`.
 
 ## Start and stop the complete demonstration
 
@@ -93,7 +93,7 @@ recovery point.
 
 ## Before any external deployment
 
-External deployment is a separate, owner-approved project. At minimum it requires managed encrypted
+External deployment would be a separate project. At minimum it requires managed encrypted
 storage, TLS, secure HttpOnly session handling, a secret manager, login throttling, resource-isolated
 PDF parsing, malware scanning, structured telemetry without document content, rate limits, backup
 and restore proof, tenant-isolation penetration testing, dependency review, retention/deletion

@@ -34,8 +34,7 @@ from rescue_desk.services.cases import current_revision, get_case
 
 DISCLAIMER = (
     "Demonstration only. This is an internal evidence-review aid, not legal, accounting, "
-    "or financial advice; it does not determine Rescue Fund eligibility or approval and is "
-    "not affiliated with Entry Inc."
+    "or financial advice, and it does not decide eligibility for any credit or program."
 )
 
 

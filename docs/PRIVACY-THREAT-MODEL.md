@@ -74,7 +74,7 @@ perform or certify redaction.
 
 ## Known demonstration limitations
 
-The local portfolio build is not a production security certification. It has no authorization to
-process real contracts or to represent any external company's controls. Before external deployment,
-perform dependency scanning, parser sandbox review, backup/restore proof, penetration testing of
-tenancy and authorization, and privacy/legal review appropriate to the actual data controller.
+The local demonstration build is not a production security certification and is not meant to
+process real contracts. Before external deployment, perform dependency scanning, parser sandbox
+review, backup/restore proof, penetration testing of tenancy and authorization, and privacy/legal
+review appropriate to the actual data controller.
