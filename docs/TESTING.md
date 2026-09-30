@@ -115,3 +115,12 @@ pending evidence decision and one blocker; the completed matter is exported with
 seeded synthetic approver-role history, and four current artifacts sharing one packet hash. All
 preloaded review decisions are attributed to `Synthetic Demo Analyst`; `Avery Analyst` has no
 programmatically seeded decision history.
+
+## Text-only update - 2026-09-30
+
+A later change edited disclaimer wording and documentation only. Without Docker, these gates were
+rerun and passed: the backend default suite (265 passed, 6 PostgreSQL-only tests skipped, 90.67%
+coverage), Ruff lint and format, strict mypy across 45 source files, the frontend component suite
+(85/85 across 13 files), ESLint, strict TypeScript, and the Next.js production build. The
+container, PostgreSQL, and browser gates were not rerun, and the committed screenshot predates the
+disclaimer wording change.
