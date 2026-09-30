@@ -16,3 +16,9 @@ node_modules/
 .next/
 playwright-report/
 test-results/
+
+# Local assistant instruction files stay out of the repository.
+# next dev can also write these into frontend/.
+CLAUDE.md
+AGENTS.md
+.claude/
