@@ -1,18 +1,36 @@
 # RescueDesk
 
-RescueDesk is a complete local portfolio demonstration of an evidence-backed ERP contract exit
-control room. It turns a public, synthetic, or properly redacted PDF into page-cited facts,
-deterministic switching scenarios, explicit blockers, a controlled human-review workflow, and four
-hash-linked export formats.
-
-It is an independent project. It is not affiliated with, endorsed by, or sponsored by Entry Inc.
-or DualEntry, and it does not provide legal, accounting, or financial advice.
+RescueDesk helps an implementation analyst work out what a company still owes on its current ERP
+software contract before it switches systems. It reads the contract PDF, shows every proposed fact
+next to the exact page it came from, has a person confirm it, and turns the confirmed facts into a
+review packet that an approver must sign off on.
 
 ![RescueDesk guided evidence workbench](docs/assets/rescuedesk-guided-workbench.png)
 
-The local demonstration begins with a plain-English three-minute route: make one live decision
-against synthetic evidence in the guided case, then compare it with a role-separated approval
-example whose approver history and four export formats are seeded synthetic data.
+- **Page-cited extraction:** every proposed fact keeps its document, page number, exact quote with
+  character offsets, and a hash of that quote.
+- **A person decides each fact:** a reviewer accepts, corrects, or rejects it with a reason. A
+  corrected value stays labelled as an assumption, not as source-confirmed.
+- **Fixed-formula costs:** money is calculated with exact decimals and named, versioned formulas.
+  In the demo contract, USD 48,657.53 of a USD 120,000.00 annual subscription remains in the
+  current service year as of August 20, 2026.
+- **Approval stays blocked until the case is clean:** any open blocking finding stops readiness,
+  and only an approver-role account can approve.
+- **Four exports from one snapshot:** an internal-review PDF, a customer explanation PDF, an
+  evidence CSV, and a JSON file, all carrying the same snapshot hash.
+
+By default the demo pulls facts out of the PDF with fixed text rules. An optional local AI model
+(Ollama) can also propose facts, but it is switched off by default and never does the math or
+approves anything. The demo runs on your own machine with Docker; there is no hosted version. All
+contract data in the repository is synthetic, and it is not legal, accounting, or financial advice.
+
+Built with AI assistance (Claude Code and Codex).
+
+## Three-minute demo route
+
+Make one live decision against synthetic evidence in the guided case, then compare it with a
+completed example whose approver history and four export formats are seeded synthetic data. The
+full walkthrough is in [docs/DEMO.md](docs/DEMO.md).
 
 ## What is working
 
@@ -105,7 +123,7 @@ keyboard-accessible controls, serious/critical axe findings, and page-level hori
 Its stateful path also drives a unique synthetic
 matter through upload, processing, review, fee correction, calculation, approval, all four exports,
 download, exported state, and explicit reopen. Controlled mutation cases use unique synthetic names
-so the checked-in Northstar demonstration remains reproducible.
+so the two seeded Northstar matters stay unchanged.
 
 ## Architecture
 
